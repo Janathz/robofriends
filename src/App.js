@@ -8,20 +8,25 @@ class App extends Component {
     super();
     this.state = {
       robots: robots,
-      searchfield: "",
+      searchfield: '',
     };
 }
 
-onSearchChange (event){
-    console.log(event.target.value);
+onSearchChange = (event) => {
+    this.setState({ searchfield:event.target.value })
 }
 
-  render() {
+
+render() {
+      const filteredRobots = this.state.robots.filter(robots=>{
+          return robots.name.toLowerCase().includes(this.state.searchfield.toLowerCase())
+      })
+      //comparing both robot names and the input names converting everything to lowercase
     return (
       <div className="tc">
         <h1>RoboFriends</h1>
         <SearchBox searchChange={this.onSearchChange}/>
-        <Cardlist robots={this.state.robots} />
+        <Cardlist robots={filteredRobots} />
       </div>
     );
   }
